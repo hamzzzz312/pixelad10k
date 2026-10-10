@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PixelAd 10K</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f3f6ff;font-family:Arial,sans-serif}
+header{text-align:center;padding:28px 12px;background:#151f39}
+h1{margin:0;color:#5ce1b9;font-size:32px}
+main{max-width:900px;margin:auto;padding:16px}
+.panel{background:#151f30;border:1px solid #34415b;border-radius:14px;padding:16px;margin-bottom:16px}
+.stats{display:flex;gap:10px;justify-content:space-around;text-align:center}
+.stats strong{display:block;font-size:22px;color:#5ce1b9}
+small,.muted{color:#aab6ce}
+.grid-wrap{overflow:auto;background:#080d19;padding:8px;border-radius:8px}
+#grid{display:grid;grid-template-columns:repeat(100,5px);gap:1px;width:max-content}
+.pixel{width:5px;height:5px;padding:0;border:0;background:#34415b;cursor:pointer}
+.pixel.selected{background:#5ce1b9}
+.pixel.taken{background:#748cff}
+label{display:block;margin-top:12px;margin-bottom:5px}
+input{width:100%;padding:10px;border-radius:7px;border:1px solid #46536c;background:#0b1020;color:white}
+button.action{padding:12px;border:0;border-radius:8px;background:#5ce1b9;color:#08131b;font-weight:bold;cursor:pointer;margin-top:12px;width:100%}
+button.secondary{background:#34415b;color:white}
+#message{white-space:pre-wrap;color:#5ce1b9;margin-top:12px}
+.ad{padding:10px;border:1px solid #34415b;border-radius:8px;margin-top:8px;overflow-wrap:anywhere}
+.ad img{max-width:100%;max-height:120px}
+a{color:#5ce1b9}
+</style>
+</head>
+<body>
+<header>
+<h1>PixelAd 10K 🚀</h1>
+<p>Small pixels. Big ideas.</p>
+</header>
+<main>
+<section class="panel stats">
+<div><strong id="used">0</strong><small>Pixel terisi</small></div>
+<div><strong id="free">10.000</strong><small>Pixel tersedia</small></div>
+<div><strong id="count">0</strong><small>Iklan demo</small></div>
+</section>
+
+<section class="panel">
+<h2>🟦 Pixel Universe</h2>
+<p class="muted">Atur ukuran blok, lalu klik kotak kosong untuk memilih posisi.</p>
+<label>Lebar (pixel)</label>
+<input id="w" type="number" min="1" max="100" value="5">
+<label>Tinggi (pixel)</label>
+<input id="h" type="number" min="1" max="100" value="5">
+<p>Harga simulasi: <strong id="price">Rp25.000</strong></p>
+<div class="grid-wrap"><div id="grid"></div></div>
+<p class="muted" id="position">Belum memilih posisi.</p>
+</section>
+
+<section class="panel">
+<h2>✨ Buat iklan demo</h2>
+<label>Nama iklan</label>
+<input id="name" maxlength="60" placeholder="Contoh: Toko Pixel">
+<label>URL gambar (opsional)</label>
+<input id="image" placeholder="https://contoh.com/gambar.png">
+<label>Link tujuan (opsional)</label>
+<input id="link" placeholder="https://contoh.com">
+<button class="action" id="place">Pasang iklan demo</button>
+<div id="message"></div>
+</section>
+
+<section class="panel">
+<h2>📣 Iklan terpasang</h2>
+<div id="ads">Belum ada iklan.</div>
+<button class="action secondary" id="reset">Reset semua demo</button>
+<p class="muted">Demo ini tidak menerima pembayaran sungguhan. Data iklan hanya disimpan selama halaman berjalan.</p>
+</section>
+</main>
+
+<script>
+const N=100,RATE=1000;
+const grid=document.getElementById("grid");
+const occupied=Array(10000).fill(false);
+let selected=null,ads=[];
+
+function rupiah(n){return "Rp"+n.toLocaleString("id-ID")}
+function dims(){
+ const w=Number(document.getElementById("w").value);
+ const h=Number(document.getElementById("h").value);
+ if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w>100||h>100)
+ throw Error("Ukuran harus 1 sampai 100 pixel.");
+ return {w,h};
+}
+function cells(x,y,w,h){
+ let a=[];
+ for(let dy=0;dy<h;dy++)
+ for(let dx=0;dx<w;dx++)a.push((y+dy)*N+x+dx);
+ return a;
+}
+function available(x,y,w,h){
+ if(x+w>N||y+h>N)return false;
+ return cells(x,y,w,h).every(i=>!occupied[i]);
+}
+function stats(){
+ let used=occupied.filter(Boolean).length;
+ document.getElementById("used").textContent=used.toLocaleString("id-ID");
+ document.getElementById("free").textContent=(10000-used).toLocaleString("id-ID");
+ document.getElementById("count").textContent=ads.length;
+}
+function draw(){
+ grid.innerHTML="";
+ const preview=new Set(selected?cells(selected.x,selected.y,selected.w,selected.h):[]);
+ for(let i=0;i<10000;i++){
+  const b=document.createElement("button");
+  b.className="pixel";
+  b.title=Kolom ${i%N+1}, baris ${Math.floor(i/N)+1};
+  if(occupied[i])b.classList.add("taken");
+  else if(preview.has(i))b.classList.add("selected");
+  b.onclick=()=>{
+   try{
+    const {w,h}=dims(),x=i%N,y=Math.floor(i/N);
+    if(!available(x,y,w,h)){
+     selected=null;
+     document.getElementById("message").textContent="Area tidak tersedia. Pilih area kosong.";
+    }else{
+     selected={x,y,w,h};
+     document.getElementById("message").textContent="Posisi dipilih! Isi nama iklan, lalu pasang.";
+    }
+    position();draw();
+   }catch(e){document.getElementById("message").textContent=e.message}
+  };
+  grid.appendChild(b);
+ }
+ stats();
+}
+function position(){
+ document.getElementById("position").textContent=selected?
+ Kolom ${selected.x+1}, baris ${selected.y+1} — ${selected.w} × ${selected.h} pixel:
+ "Belum memilih posisi.";
+}
+function updatePrice(){
+ try{
+  const {w,h}=dims();
+  document.getElementById("price").textContent=rupiah(whRATE);
+ }catch{
+  document.getElementById("price").textContent="Ukuran tidak valid";
+ }
+}
+function validUrl(s){
+ if(!s.trim())return "";
+ try{
+  const u=new URL(s);
+  return ["https:","http:"].includes(u.protocol)?u.href:null;
+ }catch{return null}
+}
+function renderAds(){
+ const box=document.getElementById("ads");
+ box.replaceChildren();
+ if(!ads.length){box.textContent="Belum ada iklan.";return}
+ [...ads].reverse().forEach(ad=>{
+  const card=document.createElement("div");
+  card.className="ad";
+  const title=document.createElement("h3");
+  title.textContent=ad.name;
+  card.appendChild(title);
+  const desc=document.createElement("p");
+  desc.textContent=${ad.w} × ${ad.h} pixel · ${rupiah(ad.w*ad.h*RATE)};
+  card.appendChild(desc);
+  if(ad.image){
+   const img=document.createElement("img");
+   img.src=ad.image;img.alt=ad.name;
+   img.onerror=()=>img.remove();
+   card.appendChild(img);
+  }
+  if(ad.link){
+   const a=document.createElement("a");
+   a.href=ad.link;a.target="_blank";a.rel="noopener noreferrer";
+   a.textContent="Kunjungi iklan ↗";
+   card.appendChild(a);
+  }
+  box.appendChild(card);
+ });
+}
+document.getElementById("w").oninput=updatePrice;
+document.getElementById("h").oninput=updatePrice;
+document.getElementById("place").onclick=()=>{
+ const msg=document.getElementById("message");
+ if(!selected){msg.textContent="Klik kotak di grid untuk memilih posisi dulu.";return}
+ const name=document.getElementById("name").value.trim();
+ if(!name){msg.textContent="Isi nama iklan dulu.";return}
+ const rawImage=document.getElementById("image").value.trim();
+ const rawLink=document.getElementById("link").value.trim();
+ const image=validUrl(rawImage),link=validUrl(rawLink);
+ if(image===null||link===null){msg.textContent="URL harus diawali http:// atau https://";return}
+ const {x,y,w,h}=selected;
+ if(!available(x,y,w,h)){selected=null;draw();position();msg.textContent="Area sudah terisi. Pilih lagi.";return}
+ cells(x,y,w,h).forEach(i=>occupied[i]=true);
+ ads.push({name,image,link,x,y,w,h});
+ selected=null;
+ document.getElementById("name").value="";
+ document.getElementById("image").value="";
+ document.getElementById("link").value="";
+ msg.textContent="🎉 Iklan demo berhasil dipasang!";
+ position();draw();renderAds();
+};
+document.getElementById("reset").onclick=()=>{
+ if(!confirm("Hapus semua iklan demo?"))return;
+ occupied.fill(false);ads=[];selected=null;
+ position();draw();renderAds();
+ document.getElementById("message").textContent="Demo direset.";
+};
+draw();updatePrice();
+</script>
+</body>
+</html>
