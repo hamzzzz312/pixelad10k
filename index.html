@@ -2,78 +2,67 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PixelAd 10K</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f0f5ff;
+      background: #f1f5f9;
       color: #172554;
     }
 
     header {
-      background: #2563eb;
-      color: white;
       text-align: center;
-      padding: 35px 15px;
+      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+      color: white;
+      padding: 38px 15px;
     }
 
     header h1 {
-      font-size: 36px;
       margin: 0 0 10px;
-    }
-
-    header p {
-      margin: 0;
+      font-size: 36px;
     }
 
     main {
-      max-width: 950px;
-      margin: 25px auto;
-      padding: 15px;
-    }
-
-    .card {
-      background: white;
-      padding: 22px;
-      margin-bottom: 20px;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px #00000010;
-    }
-
-    h2 {
-      margin-top: 0;
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 14px;
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .stat {
-      background: #eff6ff;
-      padding: 15px 8px;
-      text-align: center;
-      border-radius: 10px;
+    .stat, .card {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px #0000000c;
     }
+
+    .stat { text-align: center; }
 
     .stat strong {
       display: block;
-      font-size: 21px;
+      font-size: 22px;
       color: #2563eb;
     }
 
     .stat span {
       font-size: 12px;
+      color: #64748b;
     }
+
+    .card { margin-bottom: 18px; }
+
+    h2 { margin-top: 0; }
 
     .grid-wrap {
       overflow: auto;
@@ -88,34 +77,26 @@
       gap: 1px;
       width: max-content;
       margin: auto;
+      touch-action: pan-x pan-y;
     }
 
     .pixel {
       width: 7px;
       height: 7px;
-      padding: 0;
       border: 0;
-      background: #bfdbfe;
-      cursor: crosshair;
-    }
-
-    .pixel:hover {
-      background: #2563eb;
-    }
-
-    .pixel.selected {
-      background: #f59e0b;
-    }
-
-    .pixel.sold {
-      background: #16a34a;
+      padding: 0;
+      background: #93c5fd;
       cursor: pointer;
     }
+
+    .pixel:hover { background: #2563eb; }
+    .pixel.selected { background: #f59e0b; }
+    .pixel.sold { background: #16a34a; }
 
     .legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
       margin-top: 12px;
       font-size: 13px;
     }
@@ -124,20 +105,20 @@
       display: inline-block;
       width: 10px;
       height: 10px;
-      margin-right: 5px;
+      margin-right: 4px;
       border-radius: 2px;
     }
 
     label {
       display: block;
-      margin-top: 14px;
       font-weight: bold;
+      margin-top: 14px;
     }
 
     input {
       display: block;
       width: 100%;
-      padding: 11px;
+      padding: 12px;
       margin-top: 6px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
@@ -145,61 +126,49 @@
     }
 
     button.action {
-      background: #2563eb;
-      color: white;
-      padding: 12px 18px;
-      margin-top: 15px;
       border: 0;
       border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 14px;
+      background: #2563eb;
+      color: white;
       font-size: 15px;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    button.action:hover {
-      background: #1d4ed8;
-    }
-
-    button.secondary {
-      background: #64748b;
-    }
+    button.secondary { background: #64748b; }
 
     .note {
       color: #64748b;
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .ad-item {
-      padding: 12px;
       border: 1px solid #e2e8f0;
-      border-radius: 8px;
+      border-radius: 10px;
+      padding: 12px;
       margin-top: 10px;
       overflow-wrap: anywhere;
     }
 
     .ad-item img {
-      max-width: 100px;
-      max-height: 70px;
       display: block;
-      margin-bottom: 8px;
+      max-width: 150px;
+      max-height: 100px;
+      margin: 10px 0;
     }
 
     footer {
-      text-align: center;
       padding: 25px;
+      text-align: center;
       color: #64748b;
       font-size: 13px;
     }
 
     @media (max-width: 480px) {
-      header h1 {
-        font-size: 28px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
+      header h1 { font-size: 28px; }
+      .stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -229,24 +198,20 @@
 
     <section class="card">
       <h2>🌌 Pixel Universe</h2>
-      <p>
-        Pilih kotak yang kamu inginkan.
-        Klik atau tarik untuk memilih beberapa kotak.
-      </p>
+      <p>Pilih kotak yang ingin kamu gunakan.</p>
 
       <div class="grid-wrap">
         <div id="grid"></div>
       </div>
 
       <div class="legend">
-        <span><i class="dot" style="background:#bfdbfe"></i>Tersedia</span>
+        <span><i class="dot" style="background:#93c5fd"></i>Tersedia</span>
         <span><i class="dot" style="background:#f59e0b"></i>Dipilih</span>
-        <span><i class="dot" style="background:#16a34a"></i>Iklan demo</span>
+        <span><i class="dot" style="background:#16a34a"></i>Terpakai</span>
       </div>
 
-      <p id="selectionInfo">Belum ada kotak dipilih.</p>
+      <p id="selectionInfo">0 kotak dipilih.</p>
       <p id="priceInfo">Harga demo: Rp0</p>
-
       <button class="action secondary" id="clearBtn" type="button">
         Batalkan Pilihan
       </button>
@@ -255,8 +220,8 @@
     <section class="card">
       <h2>📢 Pasang Iklan Demo</h2>
       <p class="note">
-        Pilih kotak terlebih dahulu. Isi form di bawah untuk
-        membuat iklan demo.
+        Pilih kotak, lalu isi form. Harga hanya simulasi;
+        pembayaran sungguhan belum tersedia.
       </p>
 
       <form id="adForm">
@@ -268,43 +233,86 @@
         <input id="adImage" type="url"
           placeholder="https://contoh.com/gambar.png">
 
-        <label for="adLink">URL tujuan (opsional)</label>
+        <label for="adLink">Tautan iklan (opsional)</label>
         <input id="adLink" type="url"
           placeholder="https://contoh.com">
 
-        <button class="action" type="submit">
-          Buat Iklan Demo
-        </button>
+        <button class="action" type="submit">Simpan Iklan Demo</button>
       </form>
 
-      <p class="note">
-        Harga simulasi Rp1.000 per kotak. Tidak ada uang yang
-        ditagih dan pembayaran belum diaktifkan.
-      </p>
       <p id="message" role="status"></p>
     </section>
 
     <section class="card">
       <h2>🧩 Iklan Terpasang</h2>
-      <div id="adList">Belum ada iklan terpasang.</div>
+      <div id="adList">Memuat iklan...</div>
     </section>
   </main>
 
   <footer>
-    PixelAd 10K · Demo Project · Built with HTML, CSS & JavaScript
+    PixelAd 10K · Demo Project · Made with HTML, CSS & JavaScript
   </footer>
 
   <script>
     const SIZE = 100;
     const PRICE = 1000;
+    const STORAGE_KEY = "pixelad10k_ads_v1";
 
     const grid = document.getElementById("grid");
     const selected = new Set();
     const occupied = new Set();
-    const ads = [];
-
-    let isDragging = false;
+    let ads = [];
+    let dragging = false;
     let dragMode = "add";
+
+    function showMessage(message) {
+      document.getElementById("message").textContent = message;
+    }
+
+    function loadAds() {
+      try {
+        const data = JSON.parse(
+          localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+
+        if (!Array.isArray(data)) return;
+
+        data.forEach(ad => {
+          if (!ad || typeof ad.name !== "string" ||
+              !Array.isArray(ad.pixels)) return;
+
+          const pixels = [...new Set(ad.pixels)].filter(id =>
+            Number.isInteger(id) &&
+            id >= 0 && id < SIZE * SIZE &&
+            !occupied.has(id)
+          );
+
+          if (!pixels.length) return;
+
+          const cleanAd = {
+            name: ad.name,
+            image: typeof ad.image === "string" ? ad.image : "",
+            link: typeof ad.link === "string" ? ad.link : "",
+            pixels
+          };
+
+          ads.push(cleanAd);
+          pixels.forEach(id => occupied.add(id));
+        });
+      } catch (error) {
+        showMessage("Data tersimpan tidak bisa dibaca.");
+      }
+    }
+
+    function saveAds() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
+        return true;
+      } catch (error) {
+        showMessage("Gagal menyimpan. Penyimpanan browser mungkin penuh.");
+        return false;
+      }
+    }
 
     function drawGrid() {
       const fragment = document.createDocumentFragment();
@@ -317,72 +325,53 @@
         pixel.title = "Pixel " + (i + 1);
         pixel.setAttribute("aria-label", "Pixel " + (i + 1));
 
-        pixel.addEventListener("pointerdown", function(event) {
+        pixel.addEventListener("click", () => {
           if (occupied.has(i)) {
-            showMessage("Kotak ini sudah dipakai iklan.");
+            showMessage("Kotak ini sudah dipakai.");
             return;
           }
 
-          event.preventDefault();
-          isDragging = true;
-          dragMode = selected.has(i) ? "remove" : "add";
-          changeSelection(i, dragMode === "add");
+          if (selected.has(i)) selected.delete(i);
+          else selected.add(i);
+
+          update();
         });
 
-        pixel.addEventListener("pointerenter", function() {
-          if (isDragging && !occupied.has(i)) {
-            changeSelection(i, dragMode === "add");
-          }
-        });
-
-        pixel.addEventListener("click", function() {
+        pixel.addEventListener("pointerdown", () => {
           if (occupied.has(i)) return;
+          dragging = true;
+          dragMode = selected.has(i) ? "remove" : "add";
+          changeSelection(i);
+        });
 
-          if (selected.has(i)) {
-            selected.delete(i);
-          } else {
-            selected.add(i);
-          }
-
-          updateGrid();
-          updateStats();
+        pixel.addEventListener("pointerenter", () => {
+          if (dragging && !occupied.has(i)) changeSelection(i);
         });
 
         fragment.appendChild(pixel);
       }
 
       grid.appendChild(fragment);
-      updateGrid();
-      updateStats();
+      update();
     }
 
-    document.addEventListener("pointerup", function() {
-      isDragging = false;
+    document.addEventListener("pointerup", () => {
+      dragging = false;
     });
 
-    function changeSelection(id, add) {
-      if (add) {
-        selected.add(id);
-      } else {
-        selected.delete(id);
-      }
-
-      updateGrid();
-      updateStats();
+    function changeSelection(id) {
+      if (dragMode === "add") selected.add(id);
+      else selected.delete(id);
+      update();
     }
 
-    function updateGrid() {
-      grid.querySelectorAll(".pixel").forEach(function(pixel) {
+    function update() {
+      grid.querySelectorAll(".pixel").forEach(pixel => {
         const id = Number(pixel.dataset.id);
         pixel.classList.toggle("selected", selected.has(id));
         pixel.classList.toggle("sold", occupied.has(id));
-        pixel.title = occupied.has(id)
-          ? "Iklan demo"
-          : "Pixel " + (id + 1);
       });
-    }
 
-    function updateStats() {
       document.getElementById("totalPixels").textContent =
         (SIZE * SIZE).toLocaleString("id-ID");
 
@@ -400,73 +389,63 @@
         (selected.size * PRICE).toLocaleString("id-ID");
     }
 
-    function showMessage(text) {
-      document.getElementById("message").textContent = text;
-    }
-
-    document.getElementById("clearBtn").addEventListener("click", function() {
+    document.getElementById("clearBtn").addEventListener("click", () => {
       selected.clear();
-      updateGrid();
-      updateStats();
-      showMessage("Pilihan sudah dibatalkan.");
+      update();
+      showMessage("Pilihan dibatalkan.");
     });
 
-    document.getElementById("adForm").addEventListener("submit", function(event) {
+    document.getElementById("adForm").addEventListener("submit", event => {
       event.preventDefault();
 
       const name = document.getElementById("adName").value.trim();
       const image = document.getElementById("adImage").value.trim();
       const link = document.getElementById("adLink").value.trim();
+      const pixels = Array.from(selected);
 
       if (!name) {
-        showMessage("Masukkan nama iklan terlebih dahulu.");
+        showMessage("Masukkan nama iklan.");
         return;
       }
 
-      if (selected.size === 0) {
-        showMessage("Pilih minimal satu kotak di grid terlebih dahulu.");
+      if (!pixels.length) {
+        showMessage("Pilih minimal satu kotak.");
         return;
       }
 
-      const chosen = Array.from(selected);
-
-      if (chosen.some(id => occupied.has(id))) {
-        showMessage("Ada kotak yang sudah terpakai. Pilih kotak lain.");
+      if (pixels.some(id => occupied.has(id))) {
+        showMessage("Pilih kotak yang masih tersedia.");
         return;
       }
 
-      const ad = {
-        name: name,
-        image: image,
-        link: link,
-        pixels: chosen
-      };
-
+      const ad = { name, image, link, pixels };
       ads.push(ad);
+      pixels.forEach(id => occupied.add(id));
 
-      chosen.forEach(function(id) {
-        occupied.add(id);
-      });
+      if (!saveAds()) {
+        ads.pop();
+        pixels.forEach(id => occupied.delete(id));
+        update();
+        return;
+      }
 
       selected.clear();
-      updateGrid();
-      updateStats();
+      update();
       renderAds();
-
-      document.getElementById("adForm").reset();
-      showMessage("Iklan demo berhasil dibuat! 🎉");
+      event.target.reset();
+      showMessage("Iklan demo berhasil disimpan! 🎉");
     });
 
     function renderAds() {
       const list = document.getElementById("adList");
       list.replaceChildren();
 
-      if (ads.length === 0) {
+      if (!ads.length) {
         list.textContent = "Belum ada iklan terpasang.";
         return;
       }
 
-      ads.forEach(function(ad) {
+      ads.forEach(ad => {
         const item = document.createElement("div");
         item.className = "ad-item";
 
@@ -479,30 +458,41 @@
         item.appendChild(count);
 
         if (ad.image) {
-          const img = document.createElement("img");
-          img.src = ad.image;
-          img.alt = "Gambar iklan " + ad.name;
-          img.loading = "lazy";
-          img.onerror = function() {
-            img.remove();
-          };
-          item.appendChild(img);
+          try {
+            const imageUrl = new URL(ad.image);
+            if (imageUrl.protocol === "https:" ||
+                imageUrl.protocol === "http:") {
+              const img = document.createElement("img");
+              img.src = imageUrl.href;
+              img.alt = "Gambar iklan";
+              img.onerror = () => img.remove();
+              item.appendChild(img);
+            }
+          } catch (error) {}
         }
 
         if (ad.link) {
-          const anchor = document.createElement("a");
-          anchor.href = ad.link;
-          anchor.target = "_blank";
-          anchor.rel = "noopener noreferrer";
-          anchor.textContent = "Kunjungi tautan";
-          item.appendChild(anchor);
+          try {
+            const url = new URL(ad.link);
+            if (url.protocol === "https:" ||
+                url.protocol === "http:") {
+              const anchor = document.createElement("a");
+              anchor.href = url.href;
+              anchor.target = "_blank";
+              anchor.rel = "noopener noreferrer";
+              anchor.textContent = "Kunjungi tautan";
+              item.appendChild(anchor);
+            }
+          } catch (error) {}
         }
 
         list.appendChild(item);
       });
     }
 
+    loadAds();
     drawGrid();
+    renderAds();
   </script>
 </body>
 </html>
