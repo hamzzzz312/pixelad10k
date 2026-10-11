@@ -3,503 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#0a1020">
 <title>PixelAd 10K</title>
-
 <style>
-:root {
-  --bg:#0b1020;
-  --panel:#121d32;
-  --line:#293955;
-  --text:#edf3ff;
-  --muted:#9aabc6;
-  --cyan:#5ee7f7;
-  --purple:#b5a1ff;
-}
-{ box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  margin:0;
-  background:radial-gradient(ellipse at top,#1b2b4d,var(--bg) 60%);
-  color:var(--text);
-  font:16px/1.6 system-ui, sans-serif;
-}
-.wrap { width:min(1100px,92%); margin:auto; }
-nav {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:22px 0;
-}
-.logo { font-size:22px; font-weight:900; }
-.logo span { color:var(--cyan); }
-a { color:inherit; text-decoration:none; }
-button,input,textarea,select { font:inherit; }
-button {
-  border:0;
-  border-radius:12px;
-  padding:12px 17px;
-  font-weight:800;
-  cursor:pointer;
-}
-.primary {
-  background:linear-gradient(110deg,var(--cyan),#a5f5df);
-  color:#08131c;
-}
-.secondary {
-  background:#1a2942;
-  border:1px solid var(--line);
-  color:var(--text);
-}
-.hero {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:35px;
-  align-items:center;
-  padding:55px 0 35px;
-}
-.eyebrow { color:#8cf0bd; font-weight:800; }
-h1 {
-  font-size:clamp(38px,6vw,68px);
-  line-height:1.05;
-  letter-spacing:-3px;
-  margin:18px 0;
-}
-.gradient {
-  color:var(--cyan);
-}
-.muted { color:var(--muted); }
-.actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
-.panel {
-  background:#111a2eee;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:22px;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(8,minmax(0,1fr));
-  gap:5px;
-  margin-top:18px;
-}
-.tile {
-  aspect-ratio:1;
-  padding:0;
-  border-radius:5px;
-  background:#1b2942;
-  border:1px dashed #344766;
-  color:#a9bbd5;
-  overflow:hidden;
-  font-size:11px;
-}
-.tile.filled { border:1px solid #ffffff40; color:#07131d; }
-.stats {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:25px 0 55px;
-}
-.stat {
-  background:#111a2e;
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:17px;
-}
-.stat strong { display:block; font-size:24px; }
-.stat span { color:var(--muted); font-size:13px; }
-section { scroll-margin-top:20px; }
-.heading { margin-bottom:20px; }
-.heading h2 { margin-bottom:3px; }
-.tools {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:18px;
-}
-.field {
-  min-width:0;
-  background:#0b1222;
-  color:var(--text);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  width:100%;
-}
-.tools .field { flex:1; }
-.cards {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
-}
-.card {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:17px;
-  overflow-wrap:anywhere;
-}
-.card h3 { margin:8px 0; }
-.card p { color:var(--muted); font-size:14px; }
-.category {
-  color:var(--cyan);
-  font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-}
-.card a {
-  display:inline-block;
-  margin-top:8px;
-  color:var(--cyan);
-}
-.steps {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin:55px 0;
-}
-.steps article {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:20px;
-}
-.steps p { color:var(--muted); font-size:14px; }
-footer {
-  border-top:1px solid var(--line);
-  margin-top:40px;
-  padding:25px 0;
-  color:var(--muted);
-  font-size:13px;
-}
-.modal {
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:5;
-  background:#030712df;
-  padding:18px;
-  overflow:auto;
-  align-items:center;
-  justify-content:center;
-}
-.modal.open { display:flex; }
-.dialog {
-  width:min(480px,100%);
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:22px;
-}
-.dialog form { display:grid; gap:13px; }
-label { display:grid; gap:6px; font-size:14px; }
-.toast {
-  position:fixed;
-  bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#d8fff0;
-  color:#062319;
-  padding:12px 18px;
-  border-radius:12px;
-  display:none;
-  z-index:10;
-  max-width:90%;
-}
-@media(max-width:750px) {
-  .hero { grid-template-columns:1fr; padding-top:30px; }
-  .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .steps { grid-template-columns:1fr; }
-}
-@media(max-width:480px) {
-  nav { padding:14px 0; }
-  .hero { gap:22px; }
-  .cards { grid-template-columns:1fr; }
-  .stats { gap:7px; }
-  .stat { padding:10px; }
-  .stat strong { font-size:19px; }
-  .grid { gap:3px; }
-  .tile { font-size:8px; }
-}
+:root{--bg:#0a1020;--panel:#121c31;--line:#293955;--text:#edf4ff;--muted:#9aabc5;--cyan:#65e7f4;--purple:#b8a2ff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#1b2c4d,var(--bg) 65%);color:var(--text);font:16px/1.6 system-ui,sans-serif}
+.wrap{width:min(1080px,92%);margin:auto}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:12px}
+.logo{font-weight:900;font-size:23px;color:var(--text);text-decoration:none}
+.logo span,h1 span{color:var(--cyan)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:11px;padding:12px 17px;font-weight:800}
+.primary{background:linear-gradient(110deg,var(--cyan),#a8f5dc);color:#07131d}
+.secondary{background:#1b2942;color:var(--text);border:1px solid var(--line)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;padding:45px 0 30px}
+.eyebrow{color:#8ef0c2;font-weight:800;font-size:13px;letter-spacing:1px}
+h1{font-size:clamp(38px,6vw,65px);line-height:1.07;letter-spacing:-2px;margin:15px 0}
+.muted{color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.panel,.stat,.card,.step{background:#121c31eF;border:1px solid var(--line);border-radius:18px;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;margin-top:18px}
+.tile{aspect-ratio:1;padding:0;border-radius:5px;background:#1d2b45;border:1px dashed #354969;color:#b9c7dc;font-size:10px;overflow:hidden}
+.tile.filled{border:1px solid #ffffff50;color:#08121b}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 48px}
+.stat strong{display:block;font-size:23px}.stat small{color:var(--muted)}
+section{scroll-margin-top:20px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.field{width:100%;min-width:0;padding:12px;background:#0b1324;color:var(--text);border:1px solid var(--line);border-radius:10px}
+.tools .field{flex:1}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{padding:15px;overflow-wrap:anywhere}
+.adimg{width:100%;height:135px;object-fit:cover;border-radius:10px;background:#202d45}
+.category{color:var(--cyan);font-size:12px;font-weight:800;margin-top:12px}
+.card h3{margin:5px 0}.card p{color:var(--muted);font-size:14px}
+.card a{color:var(--cyan)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:48px 0}
+.step p{color:var(--muted);font-size:14px}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:#030712e8;z-index:5;overflow:auto;padding:18px;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.dialog{width:min(480px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
+.dialog form{display:grid;gap:13px}
+label{display:grid;gap:6px;font-size:14px}
+#notice{margin:15px 0;padding:12px;border-radius:10px;background:#172943;color:#d8e8ff;overflow-wrap:anywhere}
+#notice:empty{display:none}
+.badge{font-size:11px;color:#9ff3d0}
+@media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:25px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:1fr}}
+@media(max-width:480px){.cards{grid-template-columns:1fr}.grid{gap:3px}.tile{font-size:8px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:18px}}
 </style>
 </head>
-
 <body>
 <div class="wrap">
 <nav>
-  <a class="logo" href="#">PixelAd <span>10K</span></a>
-  <button class="primary" onclick="openForm()">+ Pasang iklan</button>
+<a class="logo" href="#">PixelAd <span>10K</span></a>
+<button class="primary" onclick="openForm()">+ Pasang iklan</button>
 </nav>
 
 <main>
 <section class="hero">
-  <div>
-    <div class="eyebrow">● PIXEL ADVERTISING BOARD</div>
-    <h1>Own a little piece of the <span class="gradient">internet.</span></h1>
-    <p class="muted">
-      Tempat kecil untuk ide besar. Tampilkan brand,
-      proyek, komunitas, atau karya kamu di papan pixel digital.
-    </p>
-    <div class="actions">
-      <a href="#marketplace"><button class="primary">Jelajahi iklan ↓</button></a>
-      <button class="secondary" onclick="openForm()">Buat iklan +</button>
-    </div>
-    <p class="muted">Prototype demo · Belum menerima pembayaran</p>
-  </div>
+<div>
+<div class="eyebrow">● DIGITAL PIXEL BOARD</div>
+<h1>Own a little piece of the <span>internet.</span></h1>
+<p class="muted">Tempat untuk brand, komunitas, proyek, dan karya kreatifmu. Satu papan, banyak cerita.</p>
+<div class="actions">
+<a href="#market"><button class="primary">Jelajahi iklan ↓</button></a>
+<button class="secondary" onclick="openForm()">Pasang iklan +</button>
+</div>
+<p class="muted">Prototype · Pembayaran belum tersedia</p>
+</div>
 
-  <div class="panel">
-    <strong>Papan PixelAd</strong>
-    <span class="muted" style="float:right">LIVE DEMO</span>
-    <div id="pixelGrid" class="grid"></div>
-    <p class="muted" style="font-size:13px">
-      <span id="occupied">0</span> slot contoh terisi
-    </p>
-  </div>
+<div class="panel">
+<div style="display:flex;justify-content:space-between;gap:8px">
+<strong>Papan PixelAd</strong><span class="badge">SUPABASE</span>
+</div>
+<div id="pixelGrid" class="grid"></div>
+<p class="muted"><span id="occupied">0</span> slot berisi iklan</p>
+</div>
 </section>
 
 <div class="stats">
-  <div class="stat"><strong id="totalAds">06</strong><span>Iklan demo</span></div>
-  <div class="stat"><strong>10K</strong><span>Target PixelAd</span></div>
-  <div class="stat"><strong>Rp10K</strong><span>Harga demo / iklan</span></div>
+<div class="stat"><strong id="total">0</strong><small>Iklan database</small></div>
+<div class="stat"><strong>10K</strong><small>Target pixel</small></div>
+<div class="stat"><strong>Rp10K</strong><small>Harga konsep / iklan</small></div>
 </div>
 
-<section id="marketplace">
-  <div class="heading">
-    <h2>Temukan pixel favoritmu.</h2>
-    <p class="muted">Jelajahi proyek dan brand dalam satu papan.</p>
-  </div>
-
-  <div class="panel">
-    <div class="tools">
-      <input id="search" class="field" placeholder="Cari iklan..." oninput="renderAds()">
-      <select id="filter" class="field" onchange="renderAds()">
-        <option value="">Semua kategori</option>
-        <option>Teknologi</option>
-        <option>Gaming</option>
-        <option>Kreator</option>
-        <option>Komunitas</option>
-        <option>Lainnya</option>
-      </select>
-    </div>
-    <div id="cards" class="cards"></div>
-  </div>
+<section id="market">
+<h2>Jelajahi iklan</h2>
+<p class="muted">Iklan yang dimuat dari tabel Supabase kamu.</p>
+<div class="panel">
+<div class="tools">
+<input id="search" class="field" placeholder="Cari nama pemasang..." oninput="renderAds()">
+<button class="secondary" onclick="loadAds()">↻ Muat ulang</button>
+</div>
+<div id="notice" role="status"></div>
+<div id="cards" class="cards"></div>
+</div>
 </section>
 
 <section class="steps">
-  <article>
-    <h3>01 · Buat iklan</h3>
-    <p>Isi nama proyek, deskripsi, kategori, dan tautan.</p>
-  </article>
-  <article>
-    <h3>02 · Tampilkan brand</h3>
-    <p>Iklan demo akan tampil di kartu dan papan pixel.</p>
-  </article>
-  <article>
-    <h3>03 · Siapkan peluncuran</h3>
-    <p>Berikutnya kita sambungkan ke Supabase supaya datanya bisa dibagikan ke pengunjung lain.</p>
-  </article>
+<div class="step"><h3>01 · Pasang</h3><p>Isi nama, gambar, dan tautan tujuan iklan.</p></div>
+<div class="step"><h3>02 · Tersimpan</h3><p>Data dikirim ke tabel Supabase jika izin database mengizinkannya.</p></div>
+<div class="step"><h3>03 · Tampilkan</h3><p>Iklan yang berhasil disimpan dapat dimuat oleh pengunjung lain.</p></div>
 </section>
 </main>
-
-<footer>
-  © <span id="year"></span> PixelAd 10K · Prototype komunitas kreator.
-</footer>
+<footer>© <span id="year"></span> PixelAd 10K · Dibuat untuk para kreator.</footer>
 </div>
 
 <div class="modal" id="modal">
-  <div class="dialog">
-    <h2>Pasang iklan demo</h2>
-    <form id="adForm">
-      <label>Nama proyek
-        <input class="field" id="name" maxlength="32" required placeholder="Contoh: Pixel Studio">
-      </label>
-      <label>Deskripsi
-        <textarea class="field" id="description" maxlength="120" required placeholder="Ceritakan proyekmu"></textarea>
-      </label>
-      <label>Kategori
-        <select class="field" id="category">
-          <option>Teknologi</option>
-          <option>Gaming</option>
-          <option>Kreator</option>
-          <option>Komunitas</option>
-          <option>Lainnya</option>
-        </select>
-      </label>
-      <label>URL tujuan (opsional)
-        <input class="field" id="url" type="url" placeholder="https://contoh.com">
-      </label>
-      <label>Warna kartu
-        <input class="field" id="color" type="color" value="#5ee7f7">
-      </label>
-      <button class="primary" type="submit">Simpan iklan demo</button>
-      <button class="secondary" type="button" onclick="closeForm()">Batal</button>
-      <small class="muted">Saat ini data tersimpan di browser ini saja.</small>
-    </form>
-  </div>
+<div class="dialog">
+<h2>Pasang iklan</h2>
+<p class="muted">Isi informasi iklanmu. Ini belum memproses pembayaran.</p>
+<form id="adForm">
+<label>Nama pemasang iklan
+<input id="adName" class="field" maxlength="80" required placeholder="Nama brand atau proyek">
+</label>
+<label>URL gambar (https://...)
+<input id="imageUrl" class="field" type="url" placeholder="https://contoh.com/gambar.png">
+</label>
+<label>URL tujuan (https://...)
+<input id="targetUrl" class="field" type="url" required placeholder="https://contoh.com">
+</label>
+<button class="primary" type="submit">Kirim iklan ke database</button>
+<button class="secondary" type="button" onclick="closeForm()">Batal</button>
+</form>
+</div>
 </div>
 
-<div id="toast" class="toast"></div>
-
 <script>
-const starterAds = [
- {id:1,name:"Nova Labs",description:"Eksperimen untuk ide digital besar.",category:"Teknologi",color:"#80f0d0",url:""},
- {id:2,name:"GG Arena",description:"Tempat berkumpulnya gamer.",category:"Gaming",color:"#b5a1ff",url:""},
- {id:3,name:"Pixel Studio",description:"Desain, ilustrasi, dan karya kreatif.",category:"Kreator",color:"#ffd27d",url:""},
- {id:4,name:"Study Club",description:"Belajar bareng, tumbuh bareng.",category:"Komunitas",color:"#85c9ff",url:""},
- {id:5,name:"Tiny Tools",description:"Tools sederhana sehari-hari.",category:"Teknologi",color:"#ff9fbc",url:""},
- {id:6,name:"Indie Quest",description:"Game dari kreator independen.",category:"Gaming",color:"#b7e58b",url:""}
-];
+/* GANTI NILAI KEY DI BAWAH DENGAN PUBLISHABLE KEY MILIKMU */
+const SUPABASE_URL = "https://pjsgechxdepmlnbyfago.supabase.co";
+const SUPABASE_KEY = "sb_publishable_VzIBPWDhLNpRYUscMssQFg_PtEhzula";
+const TABLE_URL = SUPABASE_URL + "/rest/v1/ads";
 
-const storageKey = "pixelad10k_ads_v2";
-let userAds = [];
+let ads = [];
 
-try {
-  userAds = JSON.parse(localStorage.getItem(storageKey) || "[]");
-  if (!Array.isArray(userAds)) userAds = [];
-} catch {
-  userAds = [];
-}
-
-function allAds() {
-  return [...userAds, ...starterAds];
-}
-
-function safeUrl(raw) {
-  if (!raw) return "";
+function safeUrl(value) {
+  if (!value) return "";
   try {
-    const u = new URL(raw);
-    return ["https:", "http:"].includes(u.protocol) ? u.href : "";
+    const url = new URL(value);
+    return ["https:", "http:"].includes(url.protocol) ? url.href : "";
   } catch {
     return "";
   }
 }
 
 function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
     "&":"&amp;", "<":"&lt;", ">":"&gt;",
     '"':"&quot;", "'":"&#39;"
   })[c]);
 }
 
-function renderGrid() {
-  const grid = document.getElementById("pixelGrid");
-  const ads = allAds();
-  grid.innerHTML = "";
+function showNotice(message) {
+  document.getElementById("notice").textContent = message;
+}
 
-  for (let i = 0; i < 80; i++) {
-    const tile = document.createElement("button");
-    tile.className = "tile";
+function configured() {
+  return SUPABASE_KEY !== "TEMPEL_SB_PUBLISHABLE_KEY_DI_SINI"
+    && SUPABASE_KEY.startsWith("sb_publishable_");
+}
 
-    if (i < ads.length) {
-      tile.classList.add("filled");
-      tile.style.background = ads[i].color;
-      tile.textContent = ads[i].name.slice(0, 5);
-      tile.title = ads[i].name;
-      tile.onclick = () => notify(ads[i].name);
-    } else {
-      tile.textContent = "+";
-      tile.title = "Pasang iklan demo";
-      tile.onclick = openForm;
-    }
-    grid.appendChild(tile);
+async function loadAds() {
+  if (!configured()) {
+    showNotice("Masukkan publishable key Supabase di kode HTML terlebih dahulu.");
+    renderAds();
+    renderGrid();
+    return;
   }
 
-  document.getElementById("occupied").textContent =
-    Math.min(ads.length, 80);
-  document.getElementById("totalAds").textContent =
-    String(ads.length).padStart(2, "0");
+  showNotice("Sedang mengambil iklan dari Supabase...");
+  try {
+    const response = await fetch(
+      TABLE_URL + "?select=*&order=created_at.desc",
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: "Bearer " + SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const details = await response.text();
+      throw new Error("HTTP " + response.status + ": " + details);
+    }
+
+    const rows = await response.json();
+    ads = rows;
+    showNotice("Koneksi berhasil. Iklan dimuat: " + ads.length);
+    renderAds();
+    renderGrid();
+  } catch (error) {
+    console.error(error);
+    showNotice("Gagal memuat iklan. Periksa API key, Data API, nama tabel, dan izin SELECT/RLS. Detail: " + error.message);
+    renderAds();
+    renderGrid();
+  }
 }
 
 function renderAds() {
   const query = document.getElementById("search").value.toLowerCase().trim();
-  const category = document.getElementById("filter").value;
+  const filtered = ads.filter(ad =>
+    String(ad.advertiser_name || "").toLowerCase().includes(query)
+  );
 
-  const filtered = allAds().filter(ad => {
-    const text = (ad.name + " " + ad.description + " " + ad.category).toLowerCase();
-    return text.includes(query) && (!category || ad.category === category);
-  });
-
+  document.getElementById("total").textContent = ads.length;
   const cards = document.getElementById("cards");
 
   if (!filtered.length) {
-    cards.innerHTML = '<p class="muted">Iklan tidak ditemukan.</p>';
+    cards.innerHTML = '<p class="muted">Belum ada iklan yang cocok.</p>';
     return;
   }
 
   cards.innerHTML = filtered.map(ad => {
-    const url = safeUrl(ad.url);
+    const image = safeUrl(ad.image_url);
+    const target = safeUrl(ad.target_url);
+
     return `
       <article class="card">
-        <div class="category">${escapeHTML(ad.category)}</div>
-        <h3>${escapeHTML(ad.name)}</h3>
-        <p>${escapeHTML(ad.description)}</p>
-        <strong>Rp10.000</strong><br>
-        ${url
-          ? <a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Kunjungi ↗</a>
-          : '<p>Contoh demo</p>'}
+        ${image
+          ? <img class="adimg" src="${escapeHTML(image)}" alt="Gambar iklan" loading="lazy" referrerpolicy="no-referrer">
+          : <div class="adimg" style="display:grid;place-items:center">PixelAd 10K</div>}
+        <div class="category">IKLAN</div>
+        <h3>${escapeHTML(ad.advertiser_name || "Tanpa nama")}</h3>
+        <p>Bagian dari papan iklan PixelAd 10K.</p>
+        ${target
+          ? <a href="${escapeHTML(target)}" target="_blank" rel="noopener noreferrer">Kunjungi situs ↗</a>
+          : ""}
       </article>`;
   }).join("");
+}
+
+function renderGrid() {
+  const grid = document.getElementById("pixelGrid");
+  grid.innerHTML = "";
+  const count = Math.min(80, ads.length);
+
+  for (let i = 0; i < 80; i++) {
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    if (i < count) {
+      tile.classList.add("filled");
+      tile.style.background = ["#65e7f4","#b8a2ff","#8ce4b5","#ffd27d"][i % 4];
+      tile.textContent = ads[i].advertiser_name
+        ? ads[i].advertiser_name.slice(0, 5) : "Ad";
+      tile.title = ads[i].advertiser_name || "Iklan";
+    } else {
+      tile.textContent = "+";
+      tile.title = "Slot kosong";
+    }
+    grid.appendChild(tile);
+  }
+  document.getElementById("occupied").textContent = count;
 }
 
 function openForm() {
   document.getElementById("modal").classList.add("open");
 }
-
 function closeForm() {
   document.getElementById("modal").classList.remove("open");
-}
-
-function notify(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.style.display = "block";
-  setTimeout(() => toast.style.display = "none", 2200);
 }
 
 document.getElementById("modal").addEventListener("click", event => {
   if (event.target.id === "modal") closeForm();
 });
 
-document.getElementById("adForm").addEventListener("submit", event => {
+document.getElementById("adForm").addEventListener("submit", async event => {
   event.preventDefault();
 
-  const rawUrl = document.getElementById("url").value.trim();
-  const url = safeUrl(rawUrl);
-
-  if (rawUrl && !url) {
-    notify("URL harus dimulai dengan http:// atau https://");
+  if (!configured()) {
+    alert("Masukkan publishable key Supabase terlebih dahulu.");
     return;
   }
 
-  const ad = {
-    id: Date.now(),
-    name: document.getElementById("name").value.trim(),
-    description: document.getElementById("description").value.trim(),
-    category: document.getElementById("category").value,
-    color: document.getElementById("color").value,
-    url
-  };
+  const advertiser_name = document.getElementById("adName").value.trim();
+  const image_url = document.getElementById("imageUrl").value.trim();
+  const target_url = document.getElementById("targetUrl").value.trim();
 
-  userAds.unshift(ad);
+  if (image_url && !safeUrl(image_url)) {
+    alert("URL gambar harus memakai http:// atau https://");
+    return;
+  }
+  if (!safeUrl(target_url)) {
+    alert("URL tujuan harus memakai http:// atau https://");
+    return;
+  }
+
+  const submitButton = event.submitter;
+  submitButton.disabled = true;
+  submitButton.textContent = "Mengirim...";
 
   try {
-    localStorage.setItem(storageKey, JSON.stringify(userAds));
-  } catch {
-    userAds.shift();
-    notify("Penyimpanan browser penuh.");
-    return;
-  }
+    const response = await fetch(TABLE_URL, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify({
+        advertiser_name,
+        image_url,
+        target_url,
+        pixel_ids: []
+      })
+    });
 
-  event.target.reset();
-  closeForm();
-  renderGrid();
-  renderAds();
-  notify("Iklan demo berhasil disimpan!");
+    if (!response.ok) {
+      const details = await response.text();
+      throw new Error("HTTP " + response.status + ": " + details);
+    }
+
+    closeForm();
+    event.target.reset();
+    showNotice("Iklan berhasil dikirim ke Supabase!");
+    await loadAds();
+  } catch (error) {
+    console.error(error);
+    alert("Iklan belum tersimpan. Periksa izin INSERT/RLS dan kolom tabel. Detail: " + error.message);
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Kirim iklan ke database";
+  }
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
-renderGrid();
 renderAds();
+renderGrid();
+loadAds();
 </script>
 </body>
 </html>
