@@ -1,338 +1,778 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0a1020">
-<title>PixelAd 10K</title>
-<style>
-:root{--bg:#0a1020;--panel:#121c31;--line:#293955;--text:#edf4ff;--muted:#9aabc5;--cyan:#65e7f4;--purple:#b8a2ff}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#1b2c4d,var(--bg) 65%);color:var(--text);font:16px/1.6 system-ui,sans-serif}
-.wrap{width:min(1080px,92%);margin:auto}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:12px}
-.logo{font-weight:900;font-size:23px;color:var(--text);text-decoration:none}
-.logo span,h1 span{color:var(--cyan)}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:11px;padding:12px 17px;font-weight:800}
-.primary{background:linear-gradient(110deg,var(--cyan),#a8f5dc);color:#07131d}
-.secondary{background:#1b2942;color:var(--text);border:1px solid var(--line)}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;padding:45px 0 30px}
-.eyebrow{color:#8ef0c2;font-weight:800;font-size:13px;letter-spacing:1px}
-h1{font-size:clamp(38px,6vw,65px);line-height:1.07;letter-spacing:-2px;margin:15px 0}
-.muted{color:var(--muted)}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.panel,.stat,.card,.step{background:#121c31eF;border:1px solid var(--line);border-radius:18px;padding:20px}
-.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;margin-top:18px}
-.tile{aspect-ratio:1;padding:0;border-radius:5px;background:#1d2b45;border:1px dashed #354969;color:#b9c7dc;font-size:10px;overflow:hidden}
-.tile.filled{border:1px solid #ffffff50;color:#08121b}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 48px}
-.stat strong{display:block;font-size:23px}.stat small{color:var(--muted)}
-section{scroll-margin-top:20px}
-.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.field{width:100%;min-width:0;padding:12px;background:#0b1324;color:var(--text);border:1px solid var(--line);border-radius:10px}
-.tools .field{flex:1}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card{padding:15px;overflow-wrap:anywhere}
-.adimg{width:100%;height:135px;object-fit:cover;border-radius:10px;background:#202d45}
-.category{color:var(--cyan);font-size:12px;font-weight:800;margin-top:12px}
-.card h3{margin:5px 0}.card p{color:var(--muted);font-size:14px}
-.card a{color:var(--cyan)}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:48px 0}
-.step p{color:var(--muted);font-size:14px}
-footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:13px}
-.modal{display:none;position:fixed;inset:0;background:#030712e8;z-index:5;overflow:auto;padding:18px;align-items:center;justify-content:center}
-.modal.open{display:flex}
-.dialog{width:min(480px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
-.dialog form{display:grid;gap:13px}
-label{display:grid;gap:6px;font-size:14px}
-#notice{margin:15px 0;padding:12px;border-radius:10px;background:#172943;color:#d8e8ff;overflow-wrap:anywhere}
-#notice:empty{display:none}
-.badge{font-size:11px;color:#9ff3d0}
-@media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:25px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:1fr}}
-@media(max-width:480px){.cards{grid-template-columns:1fr}.grid{gap:3px}.tile{font-size:8px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:18px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1c">
+  <title>PixelAd 10K — Papan Iklan Pixel</title>
+
+  <style>
+    :root {
+      --bg: #080d1c;
+      --panel: #111a30;
+      --text: #f5f7ff;
+      --muted: #9caac6;
+      --accent: #65f0bd;
+      --border: #283654;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at top, #172748 0%, var(--bg) 60%);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(1120px, 94%);
+      margin: auto;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 48px 0 28px;
+    }
+
+    .tag {
+      display: inline-block;
+      color: var(--accent);
+      background: #65f0bd12;
+      border: 1px solid #65f0bd50;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin: 18px 0 14px;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 26px 0;
+    }
+
+    .stat, .panel {
+      background: #111a30dd;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+    }
+
+    .stat { padding: 17px; }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(19px, 3vw, 27px);
+      margin-bottom: 6px;
+    }
+
+    .stat small { color: var(--muted); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+      padding-bottom: 40px;
+    }
+
+    .panel { padding: 20px; min-width: 0; }
+
+    .panel h2 {
+      font-size: 20px;
+      margin: 0 0 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .board-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0 12px;
+    }
+
+    .status {
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .board-scroll {
+      width: 100%;
+      overflow: auto;
+      max-height: 72vh;
+      background: #060a14;
+      border: 1px solid #35415c;
+      border-radius: 8px;
+      overscroll-behavior: contain;
+    }
+
+    /* 100 kolom x 100 baris = 10.000 kotak */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(100, minmax(0, 1fr));
+      width: 100%;
+      min-width: 420px;
+      gap: 1px;
+      padding: 1px;
+      background: #202b43;
+    }
+
+    .tile {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      min-width: 0;
+      overflow: hidden;
+      padding: 0;
+      border: 0;
+      background: #10192c;
+      cursor: default;
+    }
+
+    .tile.empty:nth-child(4n) { background: #142039; }
+    .tile.empty:nth-child(7n) { background: #19243b; }
+
+    .tile.ad {
+      cursor: pointer;
+      background-color: #1d3550;
+    }
+
+    .tile.ad:hover {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+      z-index: 2;
+    }
+
+    .tile img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .tile-number {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #7485a4;
+      font-size: 6px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tile.empty:hover .tile-number { opacity: 1; }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 2px;
+      background: #142039;
+      border: 1px solid #35415c;
+    }
+
+    .dot.filled { background: var(--accent); }
+
+    form {
+      display: grid;
+      gap: 13px;
+      margin-top: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      color: var(--text);
+      background: #090f20;
+      border: 1px solid #35415c;
+      border-radius: 9px;
+      outline: none;
+      font: inherit;
+      font-size: 14px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 75px;
+    }
+
+    button.submit {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 16px;
+      background: var(--accent);
+      color: #06150f;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    button.submit:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .message {
+      display: none;
+      border-radius: 9px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .message.show { display: block; }
+    .message.ok { background: #123b30; color: #b7ffdf; }
+    .message.error { background: #421f2b; color: #ffd4dc; }
+
+    .instructions {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #0a1122;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 22px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      .hero { padding-top: 32px; }
+      .panel { padding: 14px; }
+      .stats { gap: 7px; }
+      .stat { padding: 12px; }
+      .board-scroll { max-height: 65vh; }
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrap">
-<nav>
-<a class="logo" href="#">PixelAd <span>10K</span></a>
-<button class="primary" onclick="openForm()">+ Pasang iklan</button>
-</nav>
+  <header>
+    <div class="container nav">
+      <div class="logo">PixelAd <span>10K</span></div>
+      <a href="#marketplace">Marketplace</a>
+    </div>
+  </header>
 
-<main>
-<section class="hero">
-<div>
-<div class="eyebrow">● DIGITAL PIXEL BOARD</div>
-<h1>Own a little piece of the <span>internet.</span></h1>
-<p class="muted">Tempat untuk brand, komunitas, proyek, dan karya kreatifmu. Satu papan, banyak cerita.</p>
-<div class="actions">
-<a href="#market"><button class="primary">Jelajahi iklan ↓</button></a>
-<button class="secondary" onclick="openForm()">Pasang iklan +</button>
-</div>
-<p class="muted">Prototype · Pembayaran belum tersedia</p>
-</div>
+  <main class="container">
+    <section class="hero">
+      <span class="tag">10.000 KOTAK IKLAN DIGITAL</span>
+      <h1>Satu kotak kecil.<br><span>Satu ide besar.</span></h1>
+      <p>
+        Papan iklan pixel digital. Pasang gambar, hubungkan ke website,
+        dan tampilkan iklanmu di papan PixelAd 10K.
+      </p>
 
-<div class="panel">
-<div style="display:flex;justify-content:space-between;gap:8px">
-<strong>Papan PixelAd</strong><span class="badge">SUPABASE</span>
-</div>
-<div id="pixelGrid" class="grid"></div>
-<p class="muted"><span id="occupied">0</span> slot berisi iklan</p>
-</div>
-</section>
+      <div class="stats">
+        <div class="stat">
+          <strong id="filledCount">0</strong>
+          <small>Kotak terisi</small>
+        </div>
+        <div class="stat">
+          <strong id="adCount">0</strong>
+          <small>Iklan di database</small>
+        </div>
+        <div class="stat">
+          <strong>10.000</strong>
+          <small>Total kotak</small>
+        </div>
+      </div>
+    </section>
 
-<div class="stats">
-<div class="stat"><strong id="total">0</strong><small>Iklan database</small></div>
-<div class="stat"><strong>10K</strong><small>Target pixel</small></div>
-<div class="stat"><strong>Rp10K</strong><small>Harga konsep / iklan</small></div>
-</div>
+    <section class="layout" id="marketplace">
+      <div class="panel">
+        <h2>Papan PixelAd</h2>
+        <p class="muted">
+          Setiap kotak mewakili satu pixel iklan. Klik gambar untuk
+          membuka tautan iklannya.
+        </p>
 
-<section id="market">
-<h2>Jelajahi iklan</h2>
-<p class="muted">Iklan yang dimuat dari tabel Supabase kamu.</p>
-<div class="panel">
-<div class="tools">
-<input id="search" class="field" placeholder="Cari nama pemasang..." oninput="renderAds()">
-<button class="secondary" onclick="loadAds()">↻ Muat ulang</button>
-</div>
-<div id="notice" role="status"></div>
-<div id="cards" class="cards"></div>
-</div>
-</section>
+        <div class="board-info">
+          <div class="legend">
+            <span class="dot filled"></span> Terisi
+            <span class="dot"></span> Kosong
+          </div>
+          <span class="status" id="connectionStatus">Menghubungkan...</span>
+        </div>
 
-<section class="steps">
-<div class="step"><h3>01 · Pasang</h3><p>Isi nama, gambar, dan tautan tujuan iklan.</p></div>
-<div class="step"><h3>02 · Tersimpan</h3><p>Data dikirim ke tabel Supabase jika izin database mengizinkannya.</p></div>
-<div class="step"><h3>03 · Tampilkan</h3><p>Iklan yang berhasil disimpan dapat dimuat oleh pengunjung lain.</p></div>
-</section>
-</main>
-<footer>© <span id="year"></span> PixelAd 10K · Dibuat untuk para kreator.</footer>
-</div>
+        <div class="board-scroll">
+          <div class="grid" id="pixelGrid" aria-label="Papan 10.000 pixel iklan"></div>
+        </div>
 
-<div class="modal" id="modal">
-<div class="dialog">
-<h2>Pasang iklan</h2>
-<p class="muted">Isi informasi iklanmu. Ini belum memproses pembayaran.</p>
-<form id="adForm">
-<label>Nama pemasang iklan
-<input id="adName" class="field" maxlength="80" required placeholder="Nama brand atau proyek">
-</label>
-<label>URL gambar (https://...)
-<input id="imageUrl" class="field" type="url" placeholder="https://contoh.com/gambar.png">
-</label>
-<label>URL tujuan (https://...)
-<input id="targetUrl" class="field" type="url" required placeholder="https://contoh.com">
-</label>
-<button class="primary" type="submit">Kirim iklan ke database</button>
-<button class="secondary" type="button" onclick="closeForm()">Batal</button>
-</form>
-</div>
-</div>
+        <p class="muted">
+          Tips: pada layar kecil, geser papan jika perlu. Gambar baru
+          terlihat setelah iklan tersimpan di database dengan pixel_ids.
+        </p>
+      </div>
 
-<script>
-/* GANTI NILAI KEY DI BAWAH DENGAN PUBLISHABLE KEY MILIKMU */
-const SUPABASE_URL = "https://pjsgechxdepmlnbyfago.supabase.co";
-const SUPABASE_KEY = "sb_publishable_VzIBPWDhLNpRYUscMssQFg_PtEhzula";
-const TABLE_URL = SUPABASE_URL + "/rest/v1/ads";
+      <aside class="panel">
+        <h2>Pasang iklan</h2>
+        <p class="muted">
+          Isi data iklan. URL gambar harus bisa diakses secara publik.
+        </p>
 
-let ads = [];
+        <div id="formMessage" class="message" role="status"></div>
 
-function safeUrl(value) {
-  if (!value) return "";
-  try {
-    const url = new URL(value);
-    return ["https:", "http:"].includes(url.protocol) ? url.href : "";
-  } catch {
-    return "";
-  }
-}
+        <form id="adForm">
+          <div>
+            <label for="advertiser">Nama pengiklan</label>
+            <input id="advertiser" name="advertiser_name"
+              maxlength="100" required placeholder="Contoh: Toko Keren">
+          </div>
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;",
-    '"':"&quot;", "'":"&#39;"
-  })[c]);
-}
+          <div>
+            <label for="imageUrl">URL gambar iklan</label>
+            <input id="imageUrl" name="image_url" type="url"
+              required placeholder="https://contoh.com/gambar.jpg">
+          </div>
 
-function showNotice(message) {
-  document.getElementById("notice").textContent = message;
-}
+          <div>
+            <label for="targetUrl">URL tujuan saat gambar diklik</label>
+            <input id="targetUrl" name="target_url" type="url"
+              required placeholder="https://contoh.com">
+          </div>
 
-function configured() {
-  return SUPABASE_KEY !== "TEMPEL_SB_PUBLISHABLE_KEY_DI_SINI"
-    && SUPABASE_KEY.startsWith("sb_publishable_");
-}
+          <div>
+            <label for="pixelIds">Nomor kotak (opsional)</label>
+            <input id="pixelIds" name="pixel_ids"
+              placeholder="Contoh: 1,2,3,4">
+            <p class="muted">
+              Isi nomor kotak dari 1 sampai 10000, dipisahkan koma.
+              Jika dikosongkan, sistem mencoba memilih 10 kotak kosong.
+            </p>
+          </div>
 
-async function loadAds() {
-  if (!configured()) {
-    showNotice("Masukkan publishable key Supabase di kode HTML terlebih dahulu.");
-    renderAds();
-    renderGrid();
-    return;
-  }
+          <button class="submit" id="submitButton" type="submit">
+            Kirim iklan
+          </button>
+        </form>
 
-  showNotice("Sedang mengambil iklan dari Supabase...");
-  try {
-    const response = await fetch(
-      TABLE_URL + "?select=*&order=created_at.desc",
-      {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: "Bearer " + SUPABASE_KEY
+        <div class="instructions">
+          <strong>Catatan</strong><br>
+          Pengajuan iklan disimpan ke Supabase. Agar berhasil, tabel
+          <code>public.ads</code> harus mengizinkan akses yang diperlukan
+          melalui Data API, grants, dan RLS policies. Kode ini tidak
+          memproses pembayaran.
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    PixelAd 10K · Papan iklan pixel digital
+  </footer>
+
+  <script>
+    // Supabase project yang sudah digunakan sebelumnya.
+    const SUPABASE_URL =
+      "https://pjsgechxdepmlnbyfago.supabase.co";
+
+    // Ganti dengan publishable key milik project Supabase kamu.
+    // Jangan gunakan sb_secret_ atau service_role di website publik.
+    const SUPABASE_KEY = "TEMPEL_SB_PUBLISHABLE_KEY_DI_SINI";
+
+    const TABLE_URL = SUPABASE_URL + "/rest/v1/ads";
+    const TOTAL_PIXELS = 10000;
+    const DEFAULT_PIXEL_COUNT = 10;
+
+    const grid = document.getElementById("pixelGrid");
+    const filledCount = document.getElementById("filledCount");
+    const adCount = document.getElementById("adCount");
+    const statusText = document.getElementById("connectionStatus");
+    const form = document.getElementById("adForm");
+    const submitButton = document.getElementById("submitButton");
+    const formMessage = document.getElementById("formMessage");
+
+    let ads = [];
+    let occupiedPixels = new Map();
+
+    function supabaseHeaders(extra = {}) {
+      return {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        ...extra
+      };
+    }
+
+    function validHttpUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:";
+      } catch {
+        return false;
+      }
+    }
+
+    function showMessage(message, type) {
+      formMessage.textContent = message;
+      formMessage.className = "message show " + type;
+    }
+
+    function getPixelIds(ad) {
+      if (!Array.isArray(ad.pixel_ids)) return [];
+
+      return ad.pixel_ids
+        .map(Number)
+        .filter(id =>
+          Number.isInteger(id) &&
+          id >= 1 &&
+          id <= TOTAL_PIXELS
+        );
+    }
+
+    function buildOccupiedPixels() {
+      occupiedPixels = new Map();
+
+      // Iklan terbaru diproses lebih dulu agar tidak menimpa
+      // kotak yang sudah ditempati iklan yang lebih baru.
+      for (const ad of ads) {
+        if (!validHttpUrl(ad.image_url || "")) continue;
+
+        for (const id of getPixelIds(ad)) {
+          if (!occupiedPixels.has(id)) {
+            occupiedPixels.set(id, ad);
+          }
         }
       }
-    );
-
-    if (!response.ok) {
-      const details = await response.text();
-      throw new Error("HTTP " + response.status + ": " + details);
     }
 
-    const rows = await response.json();
-    ads = rows;
-    showNotice("Koneksi berhasil. Iklan dimuat: " + ads.length);
-    renderAds();
-    renderGrid();
-  } catch (error) {
-    console.error(error);
-    showNotice("Gagal memuat iklan. Periksa API key, Data API, nama tabel, dan izin SELECT/RLS. Detail: " + error.message);
-    renderAds();
-    renderGrid();
-  }
-}
+    function renderGrid() {
+      const fragment = document.createDocumentFragment();
 
-function renderAds() {
-  const query = document.getElementById("search").value.toLowerCase().trim();
-  const filtered = ads.filter(ad =>
-    String(ad.advertiser_name || "").toLowerCase().includes(query)
-  );
+      for (let id = 1; id <= TOTAL_PIXELS; id++) {
+        const ad = occupiedPixels.get(id);
+        const tile = document.createElement("a");
 
-  document.getElementById("total").textContent = ads.length;
-  const cards = document.getElementById("cards");
+        tile.className = "tile " + (ad ? "ad" : "empty");
+        tile.setAttribute("aria-label",
+          ad ? "Kotak " + id + ": " + (ad.advertiser_name || "Iklan")
+             : "Kotak kosong " + id
+        );
 
-  if (!filtered.length) {
-    cards.innerHTML = '<p class="muted">Belum ada iklan yang cocok.</p>';
-    return;
-  }
+        if (ad) {
+          tile.href = validHttpUrl(ad.target_url || "")
+            ? ad.target_url
+            : "#";
 
-  cards.innerHTML = filtered.map(ad => {
-    const image = safeUrl(ad.image_url);
-    const target = safeUrl(ad.target_url);
+          if (tile.href !== "#") {
+            tile.target = "_blank";
+            tile.rel = "noopener noreferrer";
+          }
 
-    return `
-      <article class="card">
-        ${image
-          ? <img class="adimg" src="${escapeHTML(image)}" alt="Gambar iklan" loading="lazy" referrerpolicy="no-referrer">
-          : <div class="adimg" style="display:grid;place-items:center">PixelAd 10K</div>}
-        <div class="category">IKLAN</div>
-        <h3>${escapeHTML(ad.advertiser_name || "Tanpa nama")}</h3>
-        <p>Bagian dari papan iklan PixelAd 10K.</p>
-        ${target
-          ? <a href="${escapeHTML(target)}" target="_blank" rel="noopener noreferrer">Kunjungi situs ↗</a>
-          : ""}
-      </article>`;
-  }).join("");
-}
+          const img = document.createElement("img");
+          img.src = ad.image_url;
+          img.alt = ad.advertiser_name || "Iklan";
+          img.loading = "lazy";
+          img.decoding = "async";
+          img.referrerPolicy = "no-referrer";
 
-function renderGrid() {
-  const grid = document.getElementById("pixelGrid");
-  grid.innerHTML = "";
-  const count = Math.min(80, ads.length);
+          img.addEventListener("error", () => {
+            img.style.display = "none";
+            tile.title = "Gambar iklan tidak dapat dimuat";
+          }, { once: true });
 
-  for (let i = 0; i < 80; i++) {
-    const tile = document.createElement("div");
-    tile.className = "tile";
-    if (i < count) {
-      tile.classList.add("filled");
-      tile.style.background = ["#65e7f4","#b8a2ff","#8ce4b5","#ffd27d"][i % 4];
-      tile.textContent = ads[i].advertiser_name
-        ? ads[i].advertiser_name.slice(0, 5) : "Ad";
-      tile.title = ads[i].advertiser_name || "Iklan";
-    } else {
-      tile.textContent = "+";
-      tile.title = "Slot kosong";
+          tile.appendChild(img);
+          tile.title = (ad.advertiser_name || "Iklan") +
+            " — Kotak " + id;
+        } else {
+          tile.href = "#marketplace";
+          tile.addEventListener("click", event => event.preventDefault());
+
+          const number = document.createElement("span");
+          number.className = "tile-number";
+          number.textContent = id;
+          tile.appendChild(number);
+          tile.title = "Kotak kosong " + id;
+        }
+
+        fragment.appendChild(tile);
+      }
+
+      grid.replaceChildren(fragment);
+
+      const occupied = occupiedPixels.size;
+      filledCount.textContent = occupied.toLocaleString("id-ID");
+      adCount.textContent = ads.length.toLocaleString("id-ID");
     }
-    grid.appendChild(tile);
-  }
-  document.getElementById("occupied").textContent = count;
-}
 
-function openForm() {
-  document.getElementById("modal").classList.add("open");
-}
-function closeForm() {
-  document.getElementById("modal").classList.remove("open");
-}
+    async function loadAds() {
+      if (
+        !SUPABASE_KEY ||
+        SUPABASE_KEY === "TEMPEL_SB_PUBLISHABLE_KEY_DI_SINI"
+      ) {
+        statusText.textContent = "API key belum diisi";
+        statusText.style.color = "#ffd479";
+        return;
+      }
 
-document.getElementById("modal").addEventListener("click", event => {
-  if (event.target.id === "modal") closeForm();
-});
+      statusText.textContent = "Memuat iklan...";
+      statusText.style.color = "";
 
-document.getElementById("adForm").addEventListener("submit", async event => {
-  event.preventDefault();
+      try {
+        const response = await fetch(
+          TABLE_URL + "?select=advertiser_name,image_url,target_url,pixel_ids,created_at&order=created_at.desc",
+          {
+            method: "GET",
+            headers: supabaseHeaders()
+          }
+        );
 
-  if (!configured()) {
-    alert("Masukkan publishable key Supabase terlebih dahulu.");
-    return;
-  }
+        if (!response.ok) {
+          const detail = await response.text();
+          throw new Error(
+            "Supabase (" + response.status + "): " + detail
+          );
+        }
 
-  const advertiser_name = document.getElementById("adName").value.trim();
-  const image_url = document.getElementById("imageUrl").value.trim();
-  const target_url = document.getElementById("targetUrl").value.trim();
+        const data = await response.json();
+        ads = Array.isArray(data) ? data : [];
 
-  if (image_url && !safeUrl(image_url)) {
-    alert("URL gambar harus memakai http:// atau https://");
-    return;
-  }
-  if (!safeUrl(target_url)) {
-    alert("URL tujuan harus memakai http:// atau https://");
-    return;
-  }
+        buildOccupiedPixels();
+        renderGrid();
 
-  const submitButton = event.submitter;
-  submitButton.disabled = true;
-  submitButton.textContent = "Mengirim...";
+        statusText.textContent = "Supabase terhubung";
+        statusText.style.color = "#65f0bd";
+      } catch (error) {
+        console.error("Gagal memuat iklan:", error);
+        statusText.textContent = "Gagal memuat database";
+        statusText.style.color = "#ff9aa9";
 
-  try {
-    const response = await fetch(TABLE_URL, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: "Bearer " + SUPABASE_KEY,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify({
-        advertiser_name,
-        image_url,
-        target_url,
-        pixel_ids: []
-      })
+        showMessage(
+          "Grid tetap tampil, tetapi data iklan gagal dimuat. " +
+          error.message +
+          " Periksa publishable key, Data API, grants, dan RLS policy.",
+          "error"
+        );
+      }
+    }
+
+    function chooseFreePixels(quantity) {
+      const result = [];
+
+      for (let id = 1; id <= TOTAL_PIXELS && result.length < quantity; id++) {
+        if (!occupiedPixels.has(id)) {
+          result.push(id);
+        }
+      }
+
+      if (result.length < quantity) {
+        throw new Error("Kotak kosong tidak cukup untuk jumlah yang diminta.");
+      }
+
+      return result;
+    }
+
+    function parsePixelInput(value) {
+      if (!value.trim()) {
+        return chooseFreePixels(DEFAULT_PIXEL_COUNT);
+      }
+
+      const ids = value.split(",").map(item => item.trim());
+
+      if (
+        ids.some(item => !/^\d+$/.test(item)) ||
+        ids.some(item => Number(item) < 1 || Number(item) > TOTAL_PIXELS)
+      ) {
+        throw new Error("Nomor kotak harus berupa angka 1–10000.");
+      }
+
+      const numbers = ids.map(Number);
+
+      if (new Set(numbers).size !== numbers.length) {
+        throw new Error("Nomor kotak tidak boleh duplikat.");
+      }
+
+      const occupied = numbers.filter(id => occupiedPixels.has(id));
+
+      if (occupied.length > 0) {
+        throw new Error(
+          "Kotak berikut sudah terisi: " + occupied.join(", ") +
+          ". Pilih nomor lain."
+        );
+      }
+
+      return numbers;
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (
+        !SUPABASE_KEY ||
+        SUPABASE_KEY === "TEMPEL_SB_PUBLISHABLE_KEY_DI_SINI"
+      ) {
+        showMessage(
+          "Isi SUPABASE_KEY dengan publishable key dari project Supabase terlebih dahulu.",
+          "error"
+        );
+        return;
+      }
+
+      const advertiserName =
+        document.getElementById("advertiser").value.trim();
+      const imageUrl =
+        document.getElementById("imageUrl").value.trim();
+      const targetUrl =
+        document.getElementById("targetUrl").value.trim();
+      const pixelInput =
+        document.getElementById("pixelIds").value;
+
+      if (!validHttpUrl(imageUrl) || !validHttpUrl(targetUrl)) {
+        showMessage("Gunakan URL gambar dan URL tujuan yang valid (http/https).", "error");
+        return;
+      }
+
+      let pixelIds;
+
+      try {
+        pixelIds = parsePixelInput(pixelInput);
+      } catch (error) {
+        showMessage(error.message, "error");
+        return;
+      }
+
+      const payload = {
+        advertiser_name: advertiserName,
+        image_url: imageUrl,
+        target_url: targetUrl,
+        pixel_ids: pixelIds
+      };
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Mengirim...";
+      showMessage("Mengirim pengajuan iklan...", "ok");
+
+      try {
+        const response = await fetch(TABLE_URL, {
+          method: "POST",
+          headers: supabaseHeaders({
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+          }),
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const detail = await response.text();
+          throw new Error(
+            "Supabase (" + response.status + "): " + detail
+          );
+        }
+
+        showMessage(
+          "Iklan berhasil disimpan! Memuat ulang papan...",
+          "ok"
+        );
+
+        form.reset();
+        await loadAds();
+
+        if (statusText.textContent === "Supabase terhubung") {
+          showMessage(
+            "Iklan berhasil dikirim dan disimpan ke database.",
+            "ok"
+          );
+        }
+      } catch (error) {
+        console.error("Gagal menyimpan iklan:", error);
+        showMessage(
+          "Iklan gagal disimpan. " + error.message +
+          " Periksa izin INSERT dan RLS policy tabel ads.",
+          "error"
+        );
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Kirim iklan";
+      }
     });
 
-    if (!response.ok) {
-      const details = await response.text();
-      throw new Error("HTTP " + response.status + ": " + details);
-    }
-
-    closeForm();
-    event.target.reset();
-    showNotice("Iklan berhasil dikirim ke Supabase!");
-    await loadAds();
-  } catch (error) {
-    console.error(error);
-    alert("Iklan belum tersimpan. Periksa izin INSERT/RLS dan kolom tabel. Detail: " + error.message);
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = "Kirim iklan ke database";
-  }
-});
-
-document.getElementById("year").textContent = new Date().getFullYear();
-renderAds();
-renderGrid();
-loadAds();
-</script>
+    // Render 10.000 kotak kosong langsung, tanpa menunggu Supabase.
+    renderGrid();
+    loadAds();
+  </script>
 </body>
 </html>
