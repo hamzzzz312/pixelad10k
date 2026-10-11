@@ -1,498 +1,505 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PixelAd 10K</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>PixelAd 10K</title>
 
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #172554;
-    }
-
-    header {
-      text-align: center;
-      background: linear-gradient(135deg, #1d4ed8, #7c3aed);
-      color: white;
-      padding: 38px 15px;
-    }
-
-    header h1 {
-      margin: 0 0 10px;
-      font-size: 36px;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 24px auto;
-      padding: 14px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .stat, .card {
-      background: white;
-      padding: 18px;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px #0000000c;
-    }
-
-    .stat { text-align: center; }
-
-    .stat strong {
-      display: block;
-      font-size: 22px;
-      color: #2563eb;
-    }
-
-    .stat span {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .card { margin-bottom: 18px; }
-
-    h2 { margin-top: 0; }
-
-    .grid-wrap {
-      overflow: auto;
-      padding: 10px;
-      background: #e2e8f0;
-      border-radius: 10px;
-    }
-
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(100, 7px);
-      gap: 1px;
-      width: max-content;
-      margin: auto;
-      touch-action: pan-x pan-y;
-    }
-
-    .pixel {
-      width: 7px;
-      height: 7px;
-      border: 0;
-      padding: 0;
-      background: #93c5fd;
-      cursor: pointer;
-    }
-
-    .pixel:hover { background: #2563eb; }
-    .pixel.selected { background: #f59e0b; }
-    .pixel.sold { background: #16a34a; }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 12px;
-      font-size: 13px;
-    }
-
-    .dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin-right: 4px;
-      border-radius: 2px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 14px;
-    }
-
-    input {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    button.action {
-      border: 0;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 14px;
-      background: #2563eb;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    button.secondary { background: #64748b; }
-
-    .note {
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .ad-item {
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    .ad-item img {
-      display: block;
-      max-width: 150px;
-      max-height: 100px;
-      margin: 10px 0;
-    }
-
-    footer {
-      padding: 25px;
-      text-align: center;
-      color: #64748b;
-      font-size: 13px;
-    }
-
-    @media (max-width: 480px) {
-      header h1 { font-size: 28px; }
-      .stats { grid-template-columns: 1fr; }
-    }
-  </style>
+<style>
+:root {
+  --bg:#0b1020;
+  --panel:#121d32;
+  --line:#293955;
+  --text:#edf3ff;
+  --muted:#9aabc6;
+  --cyan:#5ee7f7;
+  --purple:#b5a1ff;
+}
+{ box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:radial-gradient(ellipse at top,#1b2b4d,var(--bg) 60%);
+  color:var(--text);
+  font:16px/1.6 system-ui, sans-serif;
+}
+.wrap { width:min(1100px,92%); margin:auto; }
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:22px 0;
+}
+.logo { font-size:22px; font-weight:900; }
+.logo span { color:var(--cyan); }
+a { color:inherit; text-decoration:none; }
+button,input,textarea,select { font:inherit; }
+button {
+  border:0;
+  border-radius:12px;
+  padding:12px 17px;
+  font-weight:800;
+  cursor:pointer;
+}
+.primary {
+  background:linear-gradient(110deg,var(--cyan),#a5f5df);
+  color:#08131c;
+}
+.secondary {
+  background:#1a2942;
+  border:1px solid var(--line);
+  color:var(--text);
+}
+.hero {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+  align-items:center;
+  padding:55px 0 35px;
+}
+.eyebrow { color:#8cf0bd; font-weight:800; }
+h1 {
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.05;
+  letter-spacing:-3px;
+  margin:18px 0;
+}
+.gradient {
+  color:var(--cyan);
+}
+.muted { color:var(--muted); }
+.actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+.panel {
+  background:#111a2eee;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:22px;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(8,minmax(0,1fr));
+  gap:5px;
+  margin-top:18px;
+}
+.tile {
+  aspect-ratio:1;
+  padding:0;
+  border-radius:5px;
+  background:#1b2942;
+  border:1px dashed #344766;
+  color:#a9bbd5;
+  overflow:hidden;
+  font-size:11px;
+}
+.tile.filled { border:1px solid #ffffff40; color:#07131d; }
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:25px 0 55px;
+}
+.stat {
+  background:#111a2e;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:17px;
+}
+.stat strong { display:block; font-size:24px; }
+.stat span { color:var(--muted); font-size:13px; }
+section { scroll-margin-top:20px; }
+.heading { margin-bottom:20px; }
+.heading h2 { margin-bottom:3px; }
+.tools {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:18px;
+}
+.field {
+  min-width:0;
+  background:#0b1222;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  width:100%;
+}
+.tools .field { flex:1; }
+.cards {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:17px;
+  overflow-wrap:anywhere;
+}
+.card h3 { margin:8px 0; }
+.card p { color:var(--muted); font-size:14px; }
+.category {
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.card a {
+  display:inline-block;
+  margin-top:8px;
+  color:var(--cyan);
+}
+.steps {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:55px 0;
+}
+.steps article {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+}
+.steps p { color:var(--muted); font-size:14px; }
+footer {
+  border-top:1px solid var(--line);
+  margin-top:40px;
+  padding:25px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+.modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:5;
+  background:#030712df;
+  padding:18px;
+  overflow:auto;
+  align-items:center;
+  justify-content:center;
+}
+.modal.open { display:flex; }
+.dialog {
+  width:min(480px,100%);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:22px;
+}
+.dialog form { display:grid; gap:13px; }
+label { display:grid; gap:6px; font-size:14px; }
+.toast {
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#d8fff0;
+  color:#062319;
+  padding:12px 18px;
+  border-radius:12px;
+  display:none;
+  z-index:10;
+  max-width:90%;
+}
+@media(max-width:750px) {
+  .hero { grid-template-columns:1fr; padding-top:30px; }
+  .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .steps { grid-template-columns:1fr; }
+}
+@media(max-width:480px) {
+  nav { padding:14px 0; }
+  .hero { gap:22px; }
+  .cards { grid-template-columns:1fr; }
+  .stats { gap:7px; }
+  .stat { padding:10px; }
+  .stat strong { font-size:19px; }
+  .grid { gap:3px; }
+  .tile { font-size:8px; }
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1>🟦 PixelAd 10K</h1>
-    <p>Your little space in the pixel universe.</p>
-    <p>10,000 pixels. Endless possibilities.</p>
-  </header>
+<div class="wrap">
+<nav>
+  <a class="logo" href="#">PixelAd <span>10K</span></a>
+  <button class="primary" onclick="openForm()">+ Pasang iklan</button>
+</nav>
 
-  <main>
-    <section class="stats">
-      <div class="stat">
-        <strong id="totalPixels">10,000</strong>
-        <span>Total Pixels</span>
-      </div>
-      <div class="stat">
-        <strong id="usedPixels">0</strong>
-        <span>Pixels Used</span>
-      </div>
-      <div class="stat">
-        <strong id="freePixels">10,000</strong>
-        <span>Pixels Available</span>
-      </div>
-    </section>
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">● PIXEL ADVERTISING BOARD</div>
+    <h1>Own a little piece of the <span class="gradient">internet.</span></h1>
+    <p class="muted">
+      Tempat kecil untuk ide besar. Tampilkan brand,
+      proyek, komunitas, atau karya kamu di papan pixel digital.
+    </p>
+    <div class="actions">
+      <a href="#marketplace"><button class="primary">Jelajahi iklan ↓</button></a>
+      <button class="secondary" onclick="openForm()">Buat iklan +</button>
+    </div>
+    <p class="muted">Prototype demo · Belum menerima pembayaran</p>
+  </div>
 
-    <section class="card">
-      <h2>🌌 Pixel Universe</h2>
-      <p>Pilih kotak yang ingin kamu gunakan.</p>
+  <div class="panel">
+    <strong>Papan PixelAd</strong>
+    <span class="muted" style="float:right">LIVE DEMO</span>
+    <div id="pixelGrid" class="grid"></div>
+    <p class="muted" style="font-size:13px">
+      <span id="occupied">0</span> slot contoh terisi
+    </p>
+  </div>
+</section>
 
-      <div class="grid-wrap">
-        <div id="grid"></div>
-      </div>
+<div class="stats">
+  <div class="stat"><strong id="totalAds">06</strong><span>Iklan demo</span></div>
+  <div class="stat"><strong>10K</strong><span>Target PixelAd</span></div>
+  <div class="stat"><strong>Rp10K</strong><span>Harga demo / iklan</span></div>
+</div>
 
-      <div class="legend">
-        <span><i class="dot" style="background:#93c5fd"></i>Tersedia</span>
-        <span><i class="dot" style="background:#f59e0b"></i>Dipilih</span>
-        <span><i class="dot" style="background:#16a34a"></i>Terpakai</span>
-      </div>
+<section id="marketplace">
+  <div class="heading">
+    <h2>Temukan pixel favoritmu.</h2>
+    <p class="muted">Jelajahi proyek dan brand dalam satu papan.</p>
+  </div>
 
-      <p id="selectionInfo">0 kotak dipilih.</p>
-      <p id="priceInfo">Harga demo: Rp0</p>
-      <button class="action secondary" id="clearBtn" type="button">
-        Batalkan Pilihan
-      </button>
-    </section>
+  <div class="panel">
+    <div class="tools">
+      <input id="search" class="field" placeholder="Cari iklan..." oninput="renderAds()">
+      <select id="filter" class="field" onchange="renderAds()">
+        <option value="">Semua kategori</option>
+        <option>Teknologi</option>
+        <option>Gaming</option>
+        <option>Kreator</option>
+        <option>Komunitas</option>
+        <option>Lainnya</option>
+      </select>
+    </div>
+    <div id="cards" class="cards"></div>
+  </div>
+</section>
 
-    <section class="card">
-      <h2>📢 Pasang Iklan Demo</h2>
-      <p class="note">
-        Pilih kotak, lalu isi form. Harga hanya simulasi;
-        pembayaran sungguhan belum tersedia.
-      </p>
+<section class="steps">
+  <article>
+    <h3>01 · Buat iklan</h3>
+    <p>Isi nama proyek, deskripsi, kategori, dan tautan.</p>
+  </article>
+  <article>
+    <h3>02 · Tampilkan brand</h3>
+    <p>Iklan demo akan tampil di kartu dan papan pixel.</p>
+  </article>
+  <article>
+    <h3>03 · Siapkan peluncuran</h3>
+    <p>Berikutnya kita sambungkan ke Supabase supaya datanya bisa dibagikan ke pengunjung lain.</p>
+  </article>
+</section>
+</main>
 
-      <form id="adForm">
-        <label for="adName">Nama iklan</label>
-        <input id="adName" maxlength="60" required
-          placeholder="Contoh: Toko Pixel">
+<footer>
+  © <span id="year"></span> PixelAd 10K · Prototype komunitas kreator.
+</footer>
+</div>
 
-        <label for="adImage">URL gambar (opsional)</label>
-        <input id="adImage" type="url"
-          placeholder="https://contoh.com/gambar.png">
+<div class="modal" id="modal">
+  <div class="dialog">
+    <h2>Pasang iklan demo</h2>
+    <form id="adForm">
+      <label>Nama proyek
+        <input class="field" id="name" maxlength="32" required placeholder="Contoh: Pixel Studio">
+      </label>
+      <label>Deskripsi
+        <textarea class="field" id="description" maxlength="120" required placeholder="Ceritakan proyekmu"></textarea>
+      </label>
+      <label>Kategori
+        <select class="field" id="category">
+          <option>Teknologi</option>
+          <option>Gaming</option>
+          <option>Kreator</option>
+          <option>Komunitas</option>
+          <option>Lainnya</option>
+        </select>
+      </label>
+      <label>URL tujuan (opsional)
+        <input class="field" id="url" type="url" placeholder="https://contoh.com">
+      </label>
+      <label>Warna kartu
+        <input class="field" id="color" type="color" value="#5ee7f7">
+      </label>
+      <button class="primary" type="submit">Simpan iklan demo</button>
+      <button class="secondary" type="button" onclick="closeForm()">Batal</button>
+      <small class="muted">Saat ini data tersimpan di browser ini saja.</small>
+    </form>
+  </div>
+</div>
 
-        <label for="adLink">Tautan iklan (opsional)</label>
-        <input id="adLink" type="url"
-          placeholder="https://contoh.com">
+<div id="toast" class="toast"></div>
 
-        <button class="action" type="submit">Simpan Iklan Demo</button>
-      </form>
+<script>
+const starterAds = [
+ {id:1,name:"Nova Labs",description:"Eksperimen untuk ide digital besar.",category:"Teknologi",color:"#80f0d0",url:""},
+ {id:2,name:"GG Arena",description:"Tempat berkumpulnya gamer.",category:"Gaming",color:"#b5a1ff",url:""},
+ {id:3,name:"Pixel Studio",description:"Desain, ilustrasi, dan karya kreatif.",category:"Kreator",color:"#ffd27d",url:""},
+ {id:4,name:"Study Club",description:"Belajar bareng, tumbuh bareng.",category:"Komunitas",color:"#85c9ff",url:""},
+ {id:5,name:"Tiny Tools",description:"Tools sederhana sehari-hari.",category:"Teknologi",color:"#ff9fbc",url:""},
+ {id:6,name:"Indie Quest",description:"Game dari kreator independen.",category:"Gaming",color:"#b7e58b",url:""}
+];
 
-      <p id="message" role="status"></p>
-    </section>
+const storageKey = "pixelad10k_ads_v2";
+let userAds = [];
 
-    <section class="card">
-      <h2>🧩 Iklan Terpasang</h2>
-      <div id="adList">Memuat iklan...</div>
-    </section>
-  </main>
+try {
+  userAds = JSON.parse(localStorage.getItem(storageKey) || "[]");
+  if (!Array.isArray(userAds)) userAds = [];
+} catch {
+  userAds = [];
+}
 
-  <footer>
-    PixelAd 10K · Demo Project · Made with HTML, CSS & JavaScript
-  </footer>
+function allAds() {
+  return [...userAds, ...starterAds];
+}
 
-  <script>
-    const SIZE = 100;
-    const PRICE = 1000;
-    const STORAGE_KEY = "pixelad10k_ads_v1";
+function safeUrl(raw) {
+  if (!raw) return "";
+  try {
+    const u = new URL(raw);
+    return ["https:", "http:"].includes(u.protocol) ? u.href : "";
+  } catch {
+    return "";
+  }
+}
 
-    const grid = document.getElementById("grid");
-    const selected = new Set();
-    const occupied = new Set();
-    let ads = [];
-    let dragging = false;
-    let dragMode = "add";
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
 
-    function showMessage(message) {
-      document.getElementById("message").textContent = message;
+function renderGrid() {
+  const grid = document.getElementById("pixelGrid");
+  const ads = allAds();
+  grid.innerHTML = "";
+
+  for (let i = 0; i < 80; i++) {
+    const tile = document.createElement("button");
+    tile.className = "tile";
+
+    if (i < ads.length) {
+      tile.classList.add("filled");
+      tile.style.background = ads[i].color;
+      tile.textContent = ads[i].name.slice(0, 5);
+      tile.title = ads[i].name;
+      tile.onclick = () => notify(ads[i].name);
+    } else {
+      tile.textContent = "+";
+      tile.title = "Pasang iklan demo";
+      tile.onclick = openForm;
     }
+    grid.appendChild(tile);
+  }
 
-    function loadAds() {
-      try {
-        const data = JSON.parse(
-          localStorage.getItem(STORAGE_KEY) || "[]"
-        );
+  document.getElementById("occupied").textContent =
+    Math.min(ads.length, 80);
+  document.getElementById("totalAds").textContent =
+    String(ads.length).padStart(2, "0");
+}
 
-        if (!Array.isArray(data)) return;
+function renderAds() {
+  const query = document.getElementById("search").value.toLowerCase().trim();
+  const category = document.getElementById("filter").value;
 
-        data.forEach(ad => {
-          if (!ad || typeof ad.name !== "string" ||
-              !Array.isArray(ad.pixels)) return;
+  const filtered = allAds().filter(ad => {
+    const text = (ad.name + " " + ad.description + " " + ad.category).toLowerCase();
+    return text.includes(query) && (!category || ad.category === category);
+  });
 
-          const pixels = [...new Set(ad.pixels)].filter(id =>
-            Number.isInteger(id) &&
-            id >= 0 && id < SIZE * SIZE &&
-            !occupied.has(id)
-          );
+  const cards = document.getElementById("cards");
 
-          if (!pixels.length) return;
+  if (!filtered.length) {
+    cards.innerHTML = '<p class="muted">Iklan tidak ditemukan.</p>';
+    return;
+  }
 
-          const cleanAd = {
-            name: ad.name,
-            image: typeof ad.image === "string" ? ad.image : "",
-            link: typeof ad.link === "string" ? ad.link : "",
-            pixels
-          };
+  cards.innerHTML = filtered.map(ad => {
+    const url = safeUrl(ad.url);
+    return `
+      <article class="card">
+        <div class="category">${escapeHTML(ad.category)}</div>
+        <h3>${escapeHTML(ad.name)}</h3>
+        <p>${escapeHTML(ad.description)}</p>
+        <strong>Rp10.000</strong><br>
+        ${url
+          ? <a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Kunjungi ↗</a>
+          : '<p>Contoh demo</p>'}
+      </article>`;
+  }).join("");
+}
 
-          ads.push(cleanAd);
-          pixels.forEach(id => occupied.add(id));
-        });
-      } catch (error) {
-        showMessage("Data tersimpan tidak bisa dibaca.");
-      }
-    }
+function openForm() {
+  document.getElementById("modal").classList.add("open");
+}
 
-    function saveAds() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(ads));
-        return true;
-      } catch (error) {
-        showMessage("Gagal menyimpan. Penyimpanan browser mungkin penuh.");
-        return false;
-      }
-    }
+function closeForm() {
+  document.getElementById("modal").classList.remove("open");
+}
 
-    function drawGrid() {
-      const fragment = document.createDocumentFragment();
+function notify(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  setTimeout(() => toast.style.display = "none", 2200);
+}
 
-      for (let i = 0; i < SIZE * SIZE; i++) {
-        const pixel = document.createElement("button");
-        pixel.type = "button";
-        pixel.className = "pixel";
-        pixel.dataset.id = i;
-        pixel.title = "Pixel " + (i + 1);
-        pixel.setAttribute("aria-label", "Pixel " + (i + 1));
+document.getElementById("modal").addEventListener("click", event => {
+  if (event.target.id === "modal") closeForm();
+});
 
-        pixel.addEventListener("click", () => {
-          if (occupied.has(i)) {
-            showMessage("Kotak ini sudah dipakai.");
-            return;
-          }
+document.getElementById("adForm").addEventListener("submit", event => {
+  event.preventDefault();
 
-          if (selected.has(i)) selected.delete(i);
-          else selected.add(i);
+  const rawUrl = document.getElementById("url").value.trim();
+  const url = safeUrl(rawUrl);
 
-          update();
-        });
+  if (rawUrl && !url) {
+    notify("URL harus dimulai dengan http:// atau https://");
+    return;
+  }
 
-        pixel.addEventListener("pointerdown", () => {
-          if (occupied.has(i)) return;
-          dragging = true;
-          dragMode = selected.has(i) ? "remove" : "add";
-          changeSelection(i);
-        });
+  const ad = {
+    id: Date.now(),
+    name: document.getElementById("name").value.trim(),
+    description: document.getElementById("description").value.trim(),
+    category: document.getElementById("category").value,
+    color: document.getElementById("color").value,
+    url
+  };
 
-        pixel.addEventListener("pointerenter", () => {
-          if (dragging && !occupied.has(i)) changeSelection(i);
-        });
+  userAds.unshift(ad);
 
-        fragment.appendChild(pixel);
-      }
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(userAds));
+  } catch {
+    userAds.shift();
+    notify("Penyimpanan browser penuh.");
+    return;
+  }
 
-      grid.appendChild(fragment);
-      update();
-    }
+  event.target.reset();
+  closeForm();
+  renderGrid();
+  renderAds();
+  notify("Iklan demo berhasil disimpan!");
+});
 
-    document.addEventListener("pointerup", () => {
-      dragging = false;
-    });
-
-    function changeSelection(id) {
-      if (dragMode === "add") selected.add(id);
-      else selected.delete(id);
-      update();
-    }
-
-    function update() {
-      grid.querySelectorAll(".pixel").forEach(pixel => {
-        const id = Number(pixel.dataset.id);
-        pixel.classList.toggle("selected", selected.has(id));
-        pixel.classList.toggle("sold", occupied.has(id));
-      });
-
-      document.getElementById("totalPixels").textContent =
-        (SIZE * SIZE).toLocaleString("id-ID");
-
-      document.getElementById("usedPixels").textContent =
-        occupied.size.toLocaleString("id-ID");
-
-      document.getElementById("freePixels").textContent =
-        (SIZE * SIZE - occupied.size).toLocaleString("id-ID");
-
-      document.getElementById("selectionInfo").textContent =
-        selected.size.toLocaleString("id-ID") + " kotak dipilih.";
-
-      document.getElementById("priceInfo").textContent =
-        "Harga demo: Rp" +
-        (selected.size * PRICE).toLocaleString("id-ID");
-    }
-
-    document.getElementById("clearBtn").addEventListener("click", () => {
-      selected.clear();
-      update();
-      showMessage("Pilihan dibatalkan.");
-    });
-
-    document.getElementById("adForm").addEventListener("submit", event => {
-      event.preventDefault();
-
-      const name = document.getElementById("adName").value.trim();
-      const image = document.getElementById("adImage").value.trim();
-      const link = document.getElementById("adLink").value.trim();
-      const pixels = Array.from(selected);
-
-      if (!name) {
-        showMessage("Masukkan nama iklan.");
-        return;
-      }
-
-      if (!pixels.length) {
-        showMessage("Pilih minimal satu kotak.");
-        return;
-      }
-
-      if (pixels.some(id => occupied.has(id))) {
-        showMessage("Pilih kotak yang masih tersedia.");
-        return;
-      }
-
-      const ad = { name, image, link, pixels };
-      ads.push(ad);
-      pixels.forEach(id => occupied.add(id));
-
-      if (!saveAds()) {
-        ads.pop();
-        pixels.forEach(id => occupied.delete(id));
-        update();
-        return;
-      }
-
-      selected.clear();
-      update();
-      renderAds();
-      event.target.reset();
-      showMessage("Iklan demo berhasil disimpan! 🎉");
-    });
-
-    function renderAds() {
-      const list = document.getElementById("adList");
-      list.replaceChildren();
-
-      if (!ads.length) {
-        list.textContent = "Belum ada iklan terpasang.";
-        return;
-      }
-
-      ads.forEach(ad => {
-        const item = document.createElement("div");
-        item.className = "ad-item";
-
-        const title = document.createElement("strong");
-        title.textContent = ad.name;
-        item.appendChild(title);
-
-        const count = document.createElement("p");
-        count.textContent = ad.pixels.length + " kotak";
-        item.appendChild(count);
-
-        if (ad.image) {
-          try {
-            const imageUrl = new URL(ad.image);
-            if (imageUrl.protocol === "https:" ||
-                imageUrl.protocol === "http:") {
-              const img = document.createElement("img");
-              img.src = imageUrl.href;
-              img.alt = "Gambar iklan";
-              img.onerror = () => img.remove();
-              item.appendChild(img);
-            }
-          } catch (error) {}
-        }
-
-        if (ad.link) {
-          try {
-            const url = new URL(ad.link);
-            if (url.protocol === "https:" ||
-                url.protocol === "http:") {
-              const anchor = document.createElement("a");
-              anchor.href = url.href;
-              anchor.target = "_blank";
-              anchor.rel = "noopener noreferrer";
-              anchor.textContent = "Kunjungi tautan";
-              item.appendChild(anchor);
-            }
-          } catch (error) {}
-        }
-
-        list.appendChild(item);
-      });
-    }
-
-    loadAds();
-    drawGrid();
-    renderAds();
-  </script>
+document.getElementById("year").textContent = new Date().getFullYear();
+renderGrid();
+renderAds();
+</script>
 </body>
 </html>
